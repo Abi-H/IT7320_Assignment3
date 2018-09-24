@@ -12,20 +12,26 @@ public class ComputeImplementationTest {
 	ComputeImplementation obj;
 	ICompute mockObj;
 	Employee employee;
-	int amount;
+	int income, tax, weeksAnnual, weeksFortnight, kiwisaver;
 	
 	@Before
 	public void setUp() throws Exception {
 		obj = new ComputeImplementation();
-		employee = new Employee();
+		income = 70000;
+		tax = 33;
+		weeksAnnual = 52;
+		weeksFortnight = 26;
+		kiwisaver = 3;
+		employee = new Employee(income, kiwisaver);
 		mockObj = Mockito.mock(ICompute.class);
-		amount = 70000;
+		
+		
 		obj.setObj(mockObj);
 		
-		Mockito.when(mockObj.computeTax(amount)).thenReturn((amount/33)*100);
-		Mockito.when(mockObj.weeklySalary(employee)).thenReturn(amount/52);
-		Mockito.when(mockObj.fortnightSalary(employee)).thenReturn(amount/26);
-		Mockito.when(mockObj.computeKiwiSaver(employee)).thenReturn((amount/3)*100);		
+		Mockito.when(mockObj.computeTax(employee.getIncome())).thenReturn((employee.getIncome()/tax)*100);
+		Mockito.when(mockObj.weeklySalary(employee)).thenReturn(employee.getIncome()/weeksAnnual);
+		Mockito.when(mockObj.fortnightSalary(employee)).thenReturn(employee.getIncome()/weeksFortnight);
+		Mockito.when(mockObj.computeKiwiSaver(employee)).thenReturn((employee.getIncome()/kiwisaver)*100);		
 	}
 	
 	@After
@@ -37,10 +43,10 @@ public class ComputeImplementationTest {
 
 	@Test
 	public void test() {
-		assertEquals((amount/33)*100, obj.computeTax(amount));
-		assertEquals(amount/52, obj.weeklySalary(employee));
-		assertEquals(amount/26, obj.fortnightSalary(employee));
-		assertEquals((amount/3)*100, obj.computeKiwiSaver(employee));
+		assertEquals((employee.getIncome()/tax)*100, obj.computeTax(income));
+		assertEquals(employee.getIncome()/weeksAnnual, obj.weeklySalary(employee));
+		assertEquals(employee.getIncome()/weeksFortnight, obj.fortnightSalary(employee));
+		assertEquals((employee.getIncome()/kiwisaver)*100, obj.computeKiwiSaver(employee));
 	}
 
 }
