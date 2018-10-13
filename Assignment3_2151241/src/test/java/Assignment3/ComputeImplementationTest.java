@@ -1,3 +1,5 @@
+// Student ID: 2151241
+
 package Assignment3;
 
 import static org.junit.Assert.*;
@@ -22,16 +24,15 @@ public class ComputeImplementationTest {
 		weeksAnnual = 52;
 		weeksFortnight = 26;
 		kiwisaver = 3;
+		
 		employee = new Employee(income, kiwisaver);
-		mockObj = Mockito.mock(ICompute.class);
-		
-		
+		mockObj = Mockito.mock(ICompute.class);	
 		obj.setObj(mockObj);
 		
 		Mockito.when(mockObj.computeTax(employee.getIncome())).thenReturn((employee.getIncome()/tax)*100);
 		Mockito.when(mockObj.weeklySalary(employee)).thenReturn(employee.getIncome()/weeksAnnual);
 		Mockito.when(mockObj.fortnightSalary(employee)).thenReturn(employee.getIncome()/weeksFortnight);
-		Mockito.when(mockObj.computeKiwiSaver(employee)).thenReturn((employee.getIncome()/kiwisaver)*100);		
+		Mockito.when(mockObj.computeKiwiSaver(employee)).thenReturn((employee.getIncome()/employee.getKiwisaver())*100);		
 	}
 	
 	@After
@@ -46,7 +47,7 @@ public class ComputeImplementationTest {
 		assertEquals((employee.getIncome()/tax)*100, obj.computeTax(income));
 		assertEquals(employee.getIncome()/weeksAnnual, obj.weeklySalary(employee));
 		assertEquals(employee.getIncome()/weeksFortnight, obj.fortnightSalary(employee));
-		assertEquals((employee.getIncome()/kiwisaver)*100, obj.computeKiwiSaver(employee));
+		assertEquals((employee.getIncome()/employee.getKiwisaver())*100, obj.computeKiwiSaver(employee));
 	}
 
 }
